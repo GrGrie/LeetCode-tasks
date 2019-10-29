@@ -34,7 +34,6 @@ public class Task922{
         for(int i : arr){
             arr[i] = input.nextInt();
         }   
-        for(int i : arr)
             System.out.println(sortArrayByParityII(arr));
         input.close();
     }
