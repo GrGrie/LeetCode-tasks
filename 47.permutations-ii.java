@@ -19,8 +19,6 @@ class Solution {
         of Collection at this point. Now going to try ad do stuff
         */
         
-        // I think I will need it in DFS
-        int size = nums.length;
         // I will add all the numbers of nums[] here:
         HashMap<Integer, Integer> numbersToPermutate = new HashMap<>();
         // Outputted sublist:
@@ -46,7 +44,7 @@ class Solution {
                                  
         
         if(subList.size() == numsSize){
-            answer.add(subList);
+            answer.add(new ArrayList<Integer>(subList));
             return;
         }
         
@@ -60,7 +58,7 @@ class Solution {
             
 
             depthFirstSearch(numbersToPermutate, subList, answer, numsSize);
-
+                
             set.setValue(set.getValue()+1);
             subList.remove(subList.size()-1);
             }
