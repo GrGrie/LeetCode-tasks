@@ -39,32 +39,34 @@ class Solution {
         return answer;
     }
 
+    //DFS algorithm for this problem:
     public void depthFirstSearch(HashMap<Integer, Integer> numbersToPermutate, List<Integer> subList,
                                  List<List<Integer>> answer, int numsSize){
                                  
-        
+        // If new permutation is the same length as original array, add it to the answer
         if(subList.size() == numsSize){
             answer.add(new ArrayList<Integer>(subList));
             return;
         }
         
-        // New type of iteration for me, iterating through HashMap
+        // New type of iteration for me, iterating through HashMap though entrySet()
         for(HashMap.Entry<Integer, Integer> set : 
             numbersToPermutate.entrySet()){
             
+            // If number's in HashMap haven't finished yet, continue search
             if(set.getValue() > 0){
                 subList.add(set.getKey());
                 set.setValue(set.getValue()-1);
             
-
             depthFirstSearch(numbersToPermutate, subList, answer, numsSize);
-                
+            
+            //If they did, go back
             set.setValue(set.getValue()+1);
-            subList.remove(subList.size()-1);
+            if(subList.size() > 0)
+                subList.remove(subList.size()-1);
             }
         }
     }
-
 }
 // @lc code=end
 
