@@ -44,8 +44,22 @@ class Solution {
         if(root == null)
             return null;
 
-        
-
+        // Create leftNode to move though it as left as we possibly can
+        Node leftNode = root;
+        while(leftNode.left != null){
+            // If our leftNode have left child, means we can consider it as "parent" node
+            Node parent = leftNode;
+            // Without this while check I miss the right-most lowest node, cuz of line 57 I guess
+            while(parent != null){
+                parent.left.next = parent.right;
+                if(parent.next != null)
+                    parent.right.next = parent.next.left;
+                parent = parent.next;
+            }
+            // Go to the left node one level lower
+            leftNode = leftNode.left;
+        }
+        return root;
     }
 }
 // @lc code=end
