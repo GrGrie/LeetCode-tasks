@@ -30,6 +30,9 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
+        if(root == null)
+            return null;
+
         
     }
 }
