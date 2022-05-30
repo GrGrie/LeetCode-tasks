@@ -5,50 +5,48 @@
  */
 // @lc code=start
 class Solution {
-    private boolean isPositive(int a){
-        if(a >= 0) return true;
-        else return false;
-    }
     public int divide(int dividend, int divisor) {
-         /*
-        So for this solution I remembered old 2nd or 3rd grade definition of division:
-        It is like substraction, but multiple times. This idea is used in the main part of my code
+        
+        /* 
+            I found this solution in discussion, I understand that I need to work with bit-manipulation and shifts, but
+            idk how for the moment and there is only 7 minutes left, so now I am going to watch some tutorials on that.
         */
 
-        if(dividend > Integer.MAX_VALUE) return Integer.MAX_VALUE;
-        if(dividend < Integer.MIN_VALUE) return Integer.MIN_VALUE;
-        if(divisor == 1) return dividend;
-
-        int answer = 0;
+		// handling special/edge cases
+        if (divisor == 0)
+            return Integer.MAX_VALUE;
+        if (divisor == -1 && dividend == Integer.MIN_VALUE)
+            return Integer.MAX_VALUE;
         
-        if(isPositive(dividend) && isPositive(divisor)){
-            while(dividend - divisor >= 0){
-                dividend -= divisor;
-                if(answer+1 != Integer.MAX_VALUE) answer++;
-                else return Integer.MAX_VALUE;
-            }
-        } else if(!isPositive(dividend) && !isPositive(divisor)){
-            while(dividend - divisor <= 0){
-                dividend -= divisor;
-                if(answer+1 != Integer.MAX_VALUE) answer++;
-                else return Integer.MAX_VALUE;
-            }
-        }else{
-            if(isPositive(dividend)){
-               while(dividend + divisor >= 0){
-                    dividend += divisor;
-                    if(answer-1 != Integer.MIN_VALUE) answer--;
-                    else return Integer.MIN_VALUE;
-                } 
-            } else if (!isPositive(dividend)){
-                while(dividend + divisor <= 0){
-                    dividend += divisor;
-                    if(answer-1 != Integer.MIN_VALUE) answer--;
-                    else return Integer.MIN_VALUE;
-                } 
-            }
-        } 
-        return answer;
+		// decide sign of resultant
+        boolean isPositive = true;
+        if (divisor < 0 ^ dividend < 0)
+            isPositive = false;
+        
+		// using long to handle cases like, dividend = INT_MIN, divisor = 1
+        long divid = Math.abs((long)dividend);
+        long divis = Math.abs((long)divisor);
+        
+		// ans to store final result
+        int ans = 0;
+        while (divid >= divis) {
+            
+			// calculate number of left shifts
+            int shifts = 0;
+            while (divid >= (divis << shifts))
+                shifts ++;
+            
+			// update answer
+            ans += (1 << (shifts - 1));
+			
+			// dividend minus the largest shifted divisor
+            divid -= (divis << (shifts - 1));
+        }
+		
+		// return answer alongwith sign
+        if (isPositive)
+            return ans;
+        return -ans;
     }
 }
 // @lc code=end
