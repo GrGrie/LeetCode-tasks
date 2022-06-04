@@ -19,25 +19,32 @@ class Solution {
         */
         
         int[][] board = new int[n][n];
-        solve(board, 0);
+        List<List<String>> answer = new LinkedList<>();
+
+        solve(board, 0, answer);
         
-        return null;
+        return answer;
     }
 
     
-
-    public void solve(int[][] board, int startColumn){
-        int n = board.length;
-        if(startColumn == n){
-            printBoard(board);
-            board = new int[n][n];
+    // Heart of the program
+    public void solve(int[][] board, int startColumn, List<List<String>> answer){
+        /* 
+        Exit situation -- when we got to the last column, we should just return everything we have
+        found and just exit the program. Of course, before that, add solution to answers list
+        */
+        if(startColumn == board.length){
+            answer.add(convertToList(board));
+            board = new int[board.length][board.length];
             return;
         }
-        for(int row = 0; row < n; row++){
+
+        // Backtracking algorithm. I still don't understand it perfectly, but I got the main idea
+        for(int row = 0; row < board.length; row++){
                 if(isValid(board, row, startColumn)){
                     if(board[row][startColumn] == 0){
                         board[row][startColumn] = 1;
-                        solve(board, startColumn + 1);
+                        solve(board, startColumn + 1, answer);
                         board[row][startColumn] = 0;
                     }
                 }
