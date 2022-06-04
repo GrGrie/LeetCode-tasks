@@ -19,7 +19,7 @@ class Solution {
         */
         
         int[][] board = new int[n][n];
-        for(int i = 0; i < n; i++) solve(board, i);
+        solve(board, 0);
         
         return null;
     }
@@ -30,6 +30,7 @@ class Solution {
         int n = board.length;
         if(startColumn == n){
             printBoard(board);
+            board = new int[n][n];
             return;
         }
         for(int row = 0; row < n; row++){
@@ -37,6 +38,7 @@ class Solution {
                     if(board[row][startColumn] == 0){
                         board[row][startColumn] = 1;
                         solve(board, startColumn + 1);
+                        board[row][startColumn] = 0;
                     }
                 }
         }
