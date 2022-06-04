@@ -16,13 +16,24 @@ class Solution {
         So I am going to struggle now. 
         I am goin to use 2-d array to represent board, and convert it to 2-d List on the last step only
         */
-
+        
+        return null;
     }
 
     // Function that is supposed to return true, if we can place Queen in position [row][column]
-    public boolean isValid(int[][] board, int size, int row, int column){
+    public boolean isValid(int[][] board, int row, int column){
+        int size = board.length;
         boolean isValid = true;
-            //for(int )
+            for(int i = 0; i < size; i++){
+                for(int j = 0; j < size; j++){
+                    if(board[row][j] == 1) // Check if the queen is attacked horizontally
+                        isValid = false;
+                    if(board[i][column] == 1) //Check if the queen is attacked vertically
+                        isValid = false;
+                    if(board[i][j] == 1 && (i+j == row+column || i-j == row-column)) // Check if the queen is attacked diagonally
+                        isValid = false;
+                }
+            }
         return isValid;
     }
 
