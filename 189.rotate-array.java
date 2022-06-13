@@ -10,18 +10,33 @@ class Solution {
         /*
          * Algorithms Study Plan (L1). Day 2
          */
+        
 
-         if(k == 0) return;
-         else {
-            int tmp1 = nums[0], tmp2 = 0;
-            for(int i = 1; i < nums.length; i++){
-                tmp2 = nums[i];
-                nums[i] = tmp1;
-                tmp1 = tmp2;
+        int pointerLeft = 0, pointerRight = nums.length - k;
+        while(pointerLeft < nums.length){
+            while(pointerRight < nums.length && pointerLeft < nums.length){
+                swap(nums, pointerLeft, pointerRight);
+                pointerLeft++;
+                pointerRight++;
+                print(nums);
             }
-            nums[0] = tmp1;
-            rotate(nums, k-1);
-         }
+            System.out.println("pointerLeft = " + pointerLeft + ", pointerRight = " + pointerRight);
+            pointerRight = nums.length - k; 
+        }
+        //[1,2,3,4,5,6,7,8,9,10]\n2
+
+            
+    }
+
+    private void swap(int[] nums, int a, int b){
+        int tmp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = tmp;
+    }
+    private void print(int[] nums){
+        for(int i = 0; i < nums.length; i++)
+            System.out.print(nums[i] + " ");
+        System.out.println();
     }
 }
 // @lc code=end
