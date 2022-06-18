@@ -5,28 +5,46 @@
  */
 
 // @lc code=start
+import java.util.HashMap;
 class WordFilter {
 /*
  * Leetcode Daily Challenge 18.06.2022.
 */
-
-    private String[] words;
+    // Creating a dictionary of all possible prefix+suffix words
+    private HashMap<String, Integer> dictionary;
 
     public WordFilter(String[] words) {
-        this.words = words;    
+        // Initialize dictionary
+        dictionary = new HashMap<String, Integer>();
+        for(int i = 0; i < words.length; i++){
+            // For each of the input words count all possible prefixes
+            String word = words[i];
+            for(int prefixEnd = 0; prefixEnd < word.length(); prefixEnd++){
+                String prefix = word.substring(0, prefixEnd+1);
+                // As well as count all possible suffixes
+                for(int suffixStart = 0; suffixStart < word.length(); suffixStart++){
+                    String suffix = word.substring(suffixStart);
+                    // Put this prefix+suffix pair in the dictionary
+                    // # is just a separator, could be any not-used sign
+                    dictionary.put(prefix+"#"+suffix, i);
+                }
+            }
+        }
+        /*
+        For "apple" this will look as follows: 
+        "a#e", "a#le", "a#ple", "a#pple", "a#apple"
+        "ap#e", "ap#le", "ap#ple","ap#pple", "ap#apple"
+        "app#e", "app#le", "app#ple", "app#pple", "app#apple"
+        ...
+        ... 
+        */    
     }
     
     public int f(String prefix, String suffix) {
-        int maxWord = -1, answer = -1;
-        for(int i = 0; i < words.length; i++){
-            String word = words[i];
-            if(word.startsWith(prefix) && word.endsWith(suffix) && word.length() > maxWord){
-               answer = i;
-               //maxWord = word.length(); 
-            }
-                
-
-        }
+        int answer = -1;
+        // Search if we have such combination in our dictionary HashMap
+        String inpuString = prefix+"#"+suffix;
+        if(dictionary.containsKey(inpuString)) return dictionary.get(inpuString);
         return answer;
     }
 }
