@@ -24,6 +24,7 @@ class Solution {
         }
         // Starting from left to right create a windows of length s1Len
         for(int i = 0; i <= s2Len - s1Len; i++){
+            if(s1Map.containsKey(s2.charAt(i))){
             String subString = s2.substring(i, i + s1Len);
             // And then create a similar map but for the substring
             for(int j = 0; j < s1Len; j++){
@@ -33,6 +34,8 @@ class Solution {
             // If they are equal, then we already can return true
             if(s1Map.equals(s2Map)) return true;
             s2Map.clear();
+            }
+            
         }
 
         return answer;
