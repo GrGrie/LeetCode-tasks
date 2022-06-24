@@ -16,16 +16,21 @@
  * }
  */
 class Solution {
+    /*
+     * Leetcode Study Plan (L1). Day 10.
+     */
     public ListNode reverseList(ListNode head) {
         
-        var dummy = new ListNode();
-        var answer = dummy;
+        return newListPointer(null, head);
+    }
 
-        while(head != null){
-            break;
-        }
-
-        return answer.next;
+    ListNode newListPointer(ListNode left, ListNode right){
+        if(right == null)
+            return left;
+        
+        ListNode tmp = right.next;
+        right.next = left;
+        return newListPointer(right, tmp);
     }
 }
 // @lc code=end
