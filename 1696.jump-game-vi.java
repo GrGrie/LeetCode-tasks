@@ -12,35 +12,26 @@ class Solution {
     //[10,-5,-2,4,0,3]\n3
     //[0,-1,-2,-3,1]\n2
     public int maxResult(int[] nums, int k) {
-        int answer = nums[0];
-        int i = 0;
-        while(i != nums.length -1){
-            int amountOfPositives = 0, newIndex = 0;
-            int currMax = Integer.MIN_VALUE;
-            for(int j = i + 1; j <= Math.min(nums.length - 1, i+k); j++){
-                if(nums[j] > 0)
-                    amountOfPositives++;
-                if(nums[j] > currMax){
-                    currMax = nums[j];
-                    newIndex = j;
-                }
+        if(nums.length == 0) return 0;
+        if(nums.length == 1) return nums[0];
+
+        int sum = 0;
+        for(int num : nums) sum += num;
+
+        int minSum = nums[1];
+        for(int i = 1; i != nums.length - 2;){
+            int minimum = Integer.MAX_VALUE;
+            int minimumIndex = 0;
+            for(int j = i+1; j <= Math.min(i+k, nums.length - 2); j++){
+                minimum = Math.min(nums[j], minimum);
+                minimumIndex = j;
             }
-            if(amountOfPositives < 2)
-                answer += currMax;
-            else {
-                for(int j = i + 1; j <= Math.min(nums.length - 1, i+k); j++){
-                    if(nums[j] > 0){
-                        answer += nums[j];
-                        newIndex = j;
-                        break;
-                    }
-                }
-            }
-            i = newIndex;
-            System.out.println("i = " + i);
+            
+            i = minimumIndex;
+            minSum += nums[i];
         }
 
-        return answer;
+        return sum - minSum;
     }
 }
 // @lc code=end
