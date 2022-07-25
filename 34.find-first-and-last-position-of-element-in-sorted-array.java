@@ -10,31 +10,42 @@ class Solution {
      * Leetcode Daily Challenge 25.07.2022.
      */
     public int[] searchRange(int[] nums, int target) {
-        if(nums.length == 0 || (nums.length == 1 && target != nums[0])) return new int[]{-1,-1};
-        int[] answer = new int[]{-1,-1};
-
-        if(nums[bs(nums, target)] != target) return answer;
-        answer[0] = bs(nums, target);
-        answer[1] = answer[0];
-        System.out.println(answer[0]);
-        while((answer[0] > 0 && nums[answer[0]] == target)){
-            if(nums[answer[0]] == target) answer[0]--;
-        }
-        while((answer[1] < nums.length-1 && nums[answer[1]] == target)){
-            if(nums[answer[1]] == target) answer[1]++;
-        }
-        return answer;
+        int[] result = new int[2];
+        result[0] = findFirst(nums, target);
+        result[1] = findLast(nums, target);
+        return result;
     }
-
-    private int bs(int[] nums, int target){
-        int n = nums.length;
-        int left = 0, right = n - 1, mid = (right + left)/2;
-        while(left <= right && right < n && mid < n){
-            if(nums[mid] > target) right = mid - 1;
-            else left = mid + 1;
-            mid = (right + left)/2;
+    
+    private int findFirst(int[] nums, int target){
+        int idx = -1;
+        int start = 0;
+        int end = nums.length - 1;
+        while(start <= end){
+            int mid = (start + end) / 2;
+            if(nums[mid] >= target){
+                end = mid - 1;
+            }else{
+                start = mid + 1;
+            }
+            if(nums[mid] == target) idx = mid;
         }
-        return mid;
+        return idx;
+    }
+    
+    private int findLast(int[] nums, int target){
+        int idx = -1;
+        int start = 0;
+        int end = nums.length - 1;
+        while(start <= end){
+            int mid = (start + end) / 2;
+            if(nums[mid] <= target){
+                start = mid + 1;
+            }else{
+                end = mid - 1;
+            }
+            if(nums[mid] == target) idx = mid;
+        }
+        return idx;
     }
 }
 // @lc code=end
